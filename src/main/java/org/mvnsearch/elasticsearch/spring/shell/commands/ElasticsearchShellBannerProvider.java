@@ -58,7 +58,7 @@ public class ElasticsearchShellBannerProvider extends DefaultBannerProvider impl
      * @return welcome message
      */
     public String getWelcomeMessage() {
-        return "Welcome to Elasticsearch Shell! Version: " + getVersion();
+        return "Welcome to ElasticSearch Shell! Version: " + getVersion();
     }
 
     /**
