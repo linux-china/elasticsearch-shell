@@ -2,6 +2,7 @@ package org.mvnsearch.elasticsearch.spring.shell.service.impl;
 
 import org.jetbrains.annotations.Nullable;
 import org.mvnsearch.elasticsearch.spring.shell.service.ConfigService;
+import org.mvnsearch.elasticsearch.spring.shell.service.ESConstants;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
@@ -43,6 +44,9 @@ public class ConfigServiceImpl implements ConfigService {
             if (cfgFile.exists()) {
                 properties.load(new FileInputStream(cfgFile));
             }
+            ESConstants.node = getNode();
+            ESConstants.index = getIndex();
+            ESConstants.type = getType();
         } catch (Exception ignore) {
 
         }
@@ -63,6 +67,7 @@ public class ConfigServiceImpl implements ConfigService {
      * @param node node
      */
     public void setNode(String node) {
+        ESConstants.node = node;
         setProperty("node", node);
     }
 
@@ -81,6 +86,7 @@ public class ConfigServiceImpl implements ConfigService {
      * @param index index name
      */
     public void setIndex(String index) {
+        ESConstants.index = index;
         setProperty("index", index);
     }
 
@@ -99,16 +105,16 @@ public class ConfigServiceImpl implements ConfigService {
      * @param type type name
      */
     public void setType(String type) {
+        ESConstants.type = type;
         setProperty("type", type);
     }
 
     /**
      * get type
      *
-     * @param type type
      * @return type
      */
-    public String getType(String type) {
+    public String getType() {
         return getProperty("type");
     }
 
