@@ -51,9 +51,8 @@ public interface ConfigService {
     /**
      * get type
      *
-     * @param type type
      * @return type
      */
-    public String getType(String type);
+    public String getType();
 
 }
