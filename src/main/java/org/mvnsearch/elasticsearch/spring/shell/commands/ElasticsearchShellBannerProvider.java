@@ -16,6 +16,7 @@ import org.springframework.stereotype.Component;
 @Component
 @Order(Ordered.HIGHEST_PRECEDENCE)
 public class ElasticsearchShellBannerProvider extends DefaultBannerProvider implements CommandMarker {
+
     /**
      * get CLI banner
      *
@@ -26,7 +27,7 @@ public class ElasticsearchShellBannerProvider extends DefaultBannerProvider impl
         StringBuilder buf = new StringBuilder();
         buf.append("=======================================" + OsUtils.LINE_SEPARATOR);
         buf.append("*                                     *" + OsUtils.LINE_SEPARATOR);
-        buf.append("*      Elactisearch Shell             *" + OsUtils.LINE_SEPARATOR);
+        buf.append("*      ElasticSearch Shell            *" + OsUtils.LINE_SEPARATOR);
         buf.append("*                                     *" + OsUtils.LINE_SEPARATOR);
         buf.append("=======================================");
         return buf.toString();
