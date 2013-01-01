@@ -65,6 +65,11 @@
             <artifactId>commons-codec</artifactId>
             <version>1.7</version>
         </dependency>
+        <dependency>
+            <groupId>org.codehaus.jackson</groupId>
+            <artifactId>jackson-mapper-lgpl</artifactId>
+            <version>1.9.11</version>
+        </dependency>
         <!--logging-->
         <dependency>
             <groupId>commons-logging</groupId>
