@@ -7,6 +7,7 @@ import org.mvnsearch.elasticsearch.spring.shell.service.ESService;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
+import java.util.Map;
 
 /**
  * ES service implementation
@@ -44,10 +45,10 @@ public class ESServiceImpl implements ESService {
      * @param id    id
      * @return source
      */
-    public String getSource(String index, String type, String id) {
+    public Map<String,Object> getSource(String index, String type, String id) {
         GetResponse response = esClient.prepareGet(index, type, id)
                 .execute()
                 .actionGet();
-        return response.getSourceAsString();
+        return response.getSource();
     }
 }

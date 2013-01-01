@@ -1,5 +1,7 @@
 package org.mvnsearch.elasticsearch.spring.shell.service;
 
+import java.util.Map;
+
 /**
  * ES service
  *
@@ -22,5 +24,5 @@ public interface ESService {
      * @param id    id
      * @return source
      */
-    public String getSource(String index, String type, String id);
+    public Map<String,Object> getSource(String index, String type, String id);
 }
