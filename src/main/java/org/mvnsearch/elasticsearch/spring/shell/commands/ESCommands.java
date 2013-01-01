@@ -6,6 +6,7 @@ import org.fusesource.jansi.Ansi;
 import org.mvnsearch.elasticsearch.spring.shell.service.ConfigService;
 import org.mvnsearch.elasticsearch.spring.shell.service.ESConstants;
 import org.mvnsearch.elasticsearch.spring.shell.service.ESService;
+import org.mvnsearch.elasticsearch.spring.shell.utils.JSonUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +16,10 @@ import org.springframework.shell.core.annotation.CliOption;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * ES commands
@@ -118,11 +123,11 @@ public class ESCommands implements CommandMarker {
      */
     @CliCommand(value = "get", help = "Get source detail")
     public String get(@CliOption(key = {""}, mandatory = true, help = "source id") String id) {
-        String source = esService.getSource(ESConstants.index, ESConstants.type, id);
-        if (StringUtils.isEmpty(source)) {
+        Map<String, Object> source = esService.getSource(ESConstants.index, ESConstants.type, id);
+        if (source == null || source.isEmpty()) {
             return wrappedAsRed("No source found with id:" + id + " !");
         }
-        return source;
+        return highLightKey(source);
     }
 
 
@@ -136,6 +141,25 @@ public class ESCommands implements CommandMarker {
         return Ansi.ansi().fg(Ansi.Color.RED).a(text).toString();
     }
 
+    /**
+     * wrapped as green with Jansi
+     *
+     * @param text text
+     * @return wrapped text
+     */
+    private String wrappedAsGreen(String text) {
+        return Ansi.ansi().fg(Ansi.Color.GREEN).a(text).toString();
+    }
+
+    /**
+     * wrapped as blue with Jansi
+     *
+     * @param text text
+     * @return wrapped text
+     */
+    private String wrappedAsBlue(String text) {
+        return Ansi.ansi().fg(Ansi.Color.BLUE).a(text).toString();
+    }
 
     /**
      * wrapped as yellow with Jansi
@@ -145,6 +169,20 @@ public class ESCommands implements CommandMarker {
      */
     private String wrappedAsYellow(String text) {
         return Ansi.ansi().fg(Ansi.Color.YELLOW).a(text).toString();
+    }
+
+    /**
+     * high light key
+     *
+     * @param source source
+     * @return json text
+     */
+    public String highLightKey(Map<String, Object> source) {
+        String jsonText = JSonUtils.toJson(source, true);
+        for (String key : source.keySet()) {
+            jsonText = StringUtils.replace(jsonText, "\"" + key + "\"", "\"" + wrappedAsBlue(key) + wrappedAsGreen("\""));
+        }
+        return jsonText;
     }
 
 }
